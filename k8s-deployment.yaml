@@ -14,8 +14,7 @@ spec:
     spec:
       containers:
       - name: html-container
-        image: html-app:latest   # local image
-        imagePullPolicy: Never   # tells k8s not to pull from Docker Hub
+        image: your-dockerhub-username/k8s-html-deploy:latest
         ports:
         - containerPort: 80
 ---
