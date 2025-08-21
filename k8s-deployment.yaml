@@ -2,10 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: html-deployment
-  labels:
-    app: html-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: html-app
@@ -16,7 +14,8 @@ spec:
     spec:
       containers:
       - name: html-container
-        image: your-dockerhub-username/simple-html-app:latest
+        image: html-app:latest   # local image
+        imagePullPolicy: Never   # tells k8s not to pull from Docker Hub
         ports:
         - containerPort: 80
 ---
@@ -25,11 +24,10 @@ kind: Service
 metadata:
   name: html-service
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: html-app
   ports:
-    - protocol: TCP
-      port: 80
+    - port: 80
       targetPort: 80
-
+      nodePort: 30080
